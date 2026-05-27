@@ -106,7 +106,8 @@
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
       <span class="font-orbitron text-xl font-bold text-[#e94560] glow-text">GAMEVAULT</span>
       <div class="flex gap-6 text-sm text-[#a0a0b0]">
-        <a href="#sobre" class="hover:text-[#e94560] transition-colors">Sobre</a>
+        <a href="#sobre" class="hover:text-[#e94560] transition-colors">Início</a>
+        <a href="#descricao" class="hover:text-[#e94560] transition-colors">Descrição</a>
         <a href="#tecnologias" class="hover:text-[#e94560] transition-colors">Tecnologias</a>
         <a href="#endpoints" class="hover:text-[#e94560] transition-colors">API</a>
         <a href="#instalacao" class="hover:text-[#e94560] transition-colors">Instalação</a>
@@ -188,13 +189,23 @@
     </div>
   </section>
 
-  <!-- ── CARDS EXPLICATIVOS ────────────────────────────────────────────────── -->
-  <section class="py-20 border-t border-[#1a1a2e]">
+  <!-- ── DESCRIÇÃO DO SISTEMA ─────────────────────────────────────────────── -->
+  <section class="py-20 border-t border-[#1a1a2e]" id="descricao">
     <div class="max-w-6xl mx-auto px-6">
-      <h2 class="font-orbitron text-3xl font-bold text-center mb-3">O que é o GameVault?</h2>
-      <p class="text-[#a0a0b0] text-center mb-12 max-w-xl mx-auto">
-        Um sistema full stack acadêmico com três camadas bem definidas, cada uma com sua responsabilidade.
-      </p>
+      <div class="text-center mb-12">
+        <span class="inline-block text-xs font-semibold bg-[#e94560]/20 text-[#e94560] border border-[#e94560]/30 px-3 py-1 rounded-full mb-4 tracking-widest uppercase">Descrição do Sistema</span>
+        <h2 class="font-orbitron text-3xl font-bold mb-4">O que é o GameVault?</h2>
+        <p class="text-[#a0a0b0] max-w-3xl mx-auto leading-relaxed">
+          O <strong class="text-white">GameVault</strong> é uma aplicação web full stack acadêmica desenvolvida para gerenciamento de um catálogo de jogos.
+          O sistema permite que o usuário <strong class="text-white">visualize todos os jogos cadastrados</strong> e <strong class="text-white">adicione novos títulos</strong> através de um formulário com validação de dados.
+          A arquitetura é dividida em três camadas independentes: uma <strong class="text-white">API REST</strong> construída com Flask, uma
+          <strong class="text-white">interface web</strong> desenvolvida com Flet que consome a API em tempo real, e uma
+          <strong class="text-white">landing page estática</strong> criada com HTML e Tailwind CSS para apresentação do projeto.
+          Todos os dados são armazenados em memória (lista Python), sem uso de banco de dados.
+        </p>
+      </div>
+
+      <!-- Cards de funcionalidades -->
       <div class="grid md:grid-cols-3 gap-6">
 
         <!-- Backend -->
@@ -432,7 +443,8 @@ cd backend/
 cd frontend/
 <span class="cmd">python main.py</span>
 
-<span class="comment"># A janela do GameVault abrirá automaticamente</span></pre>
+<span class="comment"># O browser abrirá automaticamente em:</span>
+<span class="url">http://localhost:8080</span></pre>
             </div>
           </div>
         </div>
