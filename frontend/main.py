@@ -138,7 +138,9 @@ def main(page: ft.Page) -> None:
             f.error_text = None
 
     def enviar_form(e):
-        limpar_form()
+        # Limpa apenas os erros — não os valores dos campos
+        for f in (tf_titulo, tf_genero, tf_plataforma, tf_nota):
+            f.error_text = None
         feedback_text.color = TEXT_SEC
         feedback_text.value = ""
 
@@ -283,4 +285,4 @@ def main(page: ft.Page) -> None:
     atualizar_lista()
 
 
-ft.app(target=main)
+ft.app(target=main, view=ft.AppView.WEB_BROWSER, port=8080)
