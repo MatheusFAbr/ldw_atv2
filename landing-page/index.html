@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GameVault — Catálogo de Jogos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #e94560;
+      --accent2: #0f3460;
+    }
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+    body { font-family: 'Inter', sans-serif; }
+    .font-orbitron { font-family: 'Orbitron', sans-serif; }
+
+    /* Animação do gradiente no hero */
+    .hero-gradient {
+      background: radial-gradient(ellipse at 60% 40%, #1a0033 0%, #0d0d0d 60%),
+                  radial-gradient(ellipse at 10% 80%, #0f3460 0%, transparent 50%);
+    }
+
+    /* Brilho no texto */
+    .glow-text {
+      text-shadow: 0 0 20px rgba(233, 69, 96, 0.6), 0 0 40px rgba(233, 69, 96, 0.3);
+    }
+
+    /* Linha animada no topo dos cards */
+    .card-border::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #e94560, transparent);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0d0d0d; }
+    ::-webkit-scrollbar-thumb { background: #e94560; border-radius: 3px; }
+
+    /* Badge de tecnologia */
+    .tech-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: #eaeaea;
+      transition: all .2s;
+    }
+    .tech-badge:hover {
+      border-color: #e94560;
+      background: rgba(233,69,96,0.1);
+    }
+
+    /* Código de terminal */
+    .terminal {
+      background: #0a0a0a;
+      border: 1px solid #2a2a4a;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .terminal-bar {
+      background: #1a1a2e;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-bottom: 1px solid #2a2a4a;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .terminal pre {
+      padding: 16px;
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #a0f0a0;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+    .terminal pre .cmd { color: #e94560; }
+    .terminal pre .comment { color: #606080; }
+    .terminal pre .url { color: #60b0ff; }
+
+    /* Hover card */
+    .feature-card {
+      transition: transform .2s, border-color .2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: #e94560 !important;
+    }
+  </style>
+</head>
+<body class="bg-[#0d0d0d] text-[#eaeaea]">
+
+  <!-- ── NAVBAR ───────────────────────────────────────────────────────────── -->
+  <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-[#0d0d0d]/80 border-b border-[#2a2a4a]">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <span class="font-orbitron text-xl font-bold text-[#e94560] glow-text">GAMEVAULT</span>
+      <div class="flex gap-6 text-sm text-[#a0a0b0]">
+        <a href="#sobre" class="hover:text-[#e94560] transition-colors">Sobre</a>
+        <a href="#tecnologias" class="hover:text-[#e94560] transition-colors">Tecnologias</a>
+        <a href="#endpoints" class="hover:text-[#e94560] transition-colors">API</a>
+        <a href="#instalacao" class="hover:text-[#e94560] transition-colors">Instalação</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────────────────────── -->
+  <section class="hero-gradient min-h-screen flex items-center pt-16" id="sobre">
+    <div class="max-w-6xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="inline-block text-xs font-semibold bg-[#e94560]/20 text-[#e94560] border border-[#e94560]/30 px-3 py-1 rounded-full mb-6 tracking-widest uppercase">
+          Projeto Acadêmico Full Stack
+        </div>
+        <h1 class="font-orbitron text-5xl md:text-6xl font-black leading-tight mb-6 glow-text">
+          GAME<br/><span class="text-white">VAULT</span>
+        </h1>
+        <p class="text-[#a0a0b0] text-lg leading-relaxed mb-8">
+          Plataforma completa de <strong class="text-white">catálogo de jogos</strong> com backend Flask,
+          interface desktop em Flet e landing page responsiva.
+          Cadastre, visualize e gerencie seus games favoritos.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a href="#instalacao"
+             class="px-6 py-3 bg-[#e94560] hover:bg-[#c73650] text-white font-semibold rounded-lg transition-colors">
+            Começar agora
+          </a>
+          <a href="#endpoints"
+             class="px-6 py-3 border border-[#2a2a4a] hover:border-[#e94560] text-[#a0a0b0] hover:text-white font-semibold rounded-lg transition-colors">
+            Ver a API
+          </a>
+        </div>
+      </div>
+
+      <!-- Mock da interface -->
+      <div class="hidden md:block">
+        <div class="bg-[#1a1a2e] border border-[#2a2a4a] rounded-2xl p-6 shadow-2xl">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-3 h-3 rounded-full bg-[#e94560]"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            <span class="ml-2 text-xs text-[#606080]">GameVault App</span>
+          </div>
+          <div class="space-y-3">
+            <!-- Game cards mock -->
+            <div class="flex items-center justify-between bg-[#0d0d0d] rounded-lg p-3 border border-[#2a2a4a]">
+              <div>
+                <p class="font-semibold text-sm">The Witcher 3</p>
+                <div class="flex gap-2 mt-1">
+                  <span class="text-[10px] bg-[#2a2a4a] text-[#a0a0b0] px-2 py-0.5 rounded">RPG</span>
+                  <span class="text-[10px] bg-[#1e3a5f] text-[#a0a0b0] px-2 py-0.5 rounded">PC</span>
+                </div>
+              </div>
+              <span class="text-[#00d97e] font-bold text-lg border-2 border-[#00d97e] rounded-lg px-3 py-1">9.8</span>
+            </div>
+            <div class="flex items-center justify-between bg-[#0d0d0d] rounded-lg p-3 border border-[#2a2a4a]">
+              <div>
+                <p class="font-semibold text-sm">Elden Ring</p>
+                <div class="flex gap-2 mt-1">
+                  <span class="text-[10px] bg-[#2a2a4a] text-[#a0a0b0] px-2 py-0.5 rounded">Soulslike</span>
+                  <span class="text-[10px] bg-[#1e3a5f] text-[#a0a0b0] px-2 py-0.5 rounded">PC</span>
+                </div>
+              </div>
+              <span class="text-[#00d97e] font-bold text-lg border-2 border-[#00d97e] rounded-lg px-3 py-1">9.6</span>
+            </div>
+            <div class="flex items-center justify-between bg-[#0d0d0d] rounded-lg p-3 border border-[#2a2a4a]">
+              <div>
+                <p class="font-semibold text-sm">God of War</p>
+                <div class="flex gap-2 mt-1">
+                  <span class="text-[10px] bg-[#2a2a4a] text-[#a0a0b0] px-2 py-0.5 rounded">Ação</span>
+                  <span class="text-[10px] bg-[#1e3a5f] text-[#a0a0b0] px-2 py-0.5 rounded">PS5</span>
+                </div>
+              </div>
+              <span class="text-[#00d97e] font-bold text-lg border-2 border-[#00d97e] rounded-lg px-3 py-1">9.5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CARDS EXPLICATIVOS ────────────────────────────────────────────────── -->
+  <section class="py-20 border-t border-[#1a1a2e]">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="font-orbitron text-3xl font-bold text-center mb-3">O que é o GameVault?</h2>
+      <p class="text-[#a0a0b0] text-center mb-12 max-w-xl mx-auto">
+        Um sistema full stack acadêmico com três camadas bem definidas, cada uma com sua responsabilidade.
+      </p>
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <!-- Backend -->
+        <div class="feature-card relative bg-[#1a1a2e] border border-[#2a2a4a] rounded-2xl p-6 card-border overflow-hidden">
+          <div class="text-4xl mb-4">⚙️</div>
+          <h3 class="font-orbitron font-bold text-lg mb-2 text-[#e94560]">Backend</h3>
+          <p class="text-[#a0a0b0] text-sm leading-relaxed mb-4">
+            API REST em Flask com arquitetura de Blueprints, validação Pydantic e documentação Swagger automática.
+          </p>
+          <ul class="text-sm text-[#a0a0b0] space-y-1">
+            <li class="flex items-center gap-2"><span class="text-[#e94560]">▸</span> GET /games — lista todos</li>
+            <li class="flex items-center gap-2"><span class="text-[#e94560]">▸</span> GET /games/:id — detalhe</li>
+            <li class="flex items-center gap-2"><span class="text-[#e94560]">▸</span> POST /games — cadastrar</li>
+            <li class="flex items-center gap-2"><span class="text-[#e94560]">▸</span> Swagger em /apidocs</li>
+          </ul>
+        </div>
+
+        <!-- Frontend -->
+        <div class="feature-card relative bg-[#1a1a2e] border border-[#2a2a4a] rounded-2xl p-6 card-border overflow-hidden">
+          <div class="text-4xl mb-4">🎮</div>
+          <h3 class="font-orbitron font-bold text-lg mb-2 text-[#e94560]">Frontend</h3>
+          <p class="text-[#a0a0b0] text-sm leading-relaxed mb-4">
+            Aplicação desktop em Python com Flet, tema dark gamer, consumindo a API em tempo real.
+          </p>
+          <ul class="text-sm text-[#a0a0b0] space-y-1">
+            <li class="flex items-center gap-2"><span class="text-[#e94560]">▸</span> Lista de games com notas</li>
+            <li class="flex items-center gap-2"><span class="text-[#e94560]">▸</span> Formulário de cadastro</li>
+            <li class="flex items-center gap-2"><span class="text-[#e94560]">▸</span> Feedback de sucesso/erro</li>
+            <li class="flex items-center gap-2"><span class="text-[#e94560]">▸</span> Atualização automática</li>
+          </ul>
+        </div>
+
+        <!-- Landing Page -->
+        <div class="feature-card relative bg-[#1a1a2e] border border-[#2a2a4a] rounded-2xl p-6 card-border overflow-hidden">
+          <div class="text-4xl mb-4">🌐</div>
+          <h3 class="font-orbitron font-bold text-lg mb-2 text-[#e94560]">Landing Page</h3>
+          <p class="text-[#a0a0b0] text-sm leading-relaxed mb-4">
+            Página estática apresentando o projeto com Tailwind CSS, design responsivo e tema visual gamer.
+          </p>
+          <ul class="text-sm text-[#a0a0b0] space-y-1">
+            <li class="flex items-center gap-2"><span class="text-[#e94560]">▸</span> Hero section animado</li>
+            <li class="flex items-center gap-2"><span class="text-[#e94560]">▸</span> Cards explicativos</li>
+            <li class="flex items-center gap-2"><span class="text-[#e94560]">▸</span> Documentação da API</li>
+            <li class="flex items-center gap-2"><span class="text-[#e94560]">▸</span> Guia de instalação</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TECNOLOGIAS ───────────────────────────────────────────────────────── -->
+  <section class="py-20 bg-[#0a0a0a] border-t border-[#1a1a2e]" id="tecnologias">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="font-orbitron text-3xl font-bold text-center mb-3">Tecnologias</h2>
+      <p class="text-[#a0a0b0] text-center mb-12">Stack escolhida para o projeto acadêmico</p>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Backend -->
+        <div class="bg-[#1a1a2e] border border-[#2a2a4a] rounded-2xl p-6">
+          <h3 class="font-semibold text-[#e94560] mb-4 flex items-center gap-2">
+            <span>⚙️</span> Backend
+          </h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="tech-badge">🐍 Python 3.11+</span>
+            <span class="tech-badge">🌶️ Flask</span>
+            <span class="tech-badge">📘 Blueprints</span>
+            <span class="tech-badge">📋 Flasgger / Swagger</span>
+            <span class="tech-badge">✅ Pydantic v2</span>
+            <span class="tech-badge">🔗 Flask-CORS</span>
+          </div>
+        </div>
+
+        <!-- Frontend -->
+        <div class="bg-[#1a1a2e] border border-[#2a2a4a] rounded-2xl p-6">
+          <h3 class="font-semibold text-[#e94560] mb-4 flex items-center gap-2">
+            <span>🎮</span> Frontend
+          </h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="tech-badge">🐍 Python 3.11+</span>
+            <span class="tech-badge">🎨 Flet</span>
+            <span class="tech-badge">🌐 Requests</span>
+            <span class="tech-badge">🖤 Dark Theme</span>
+          </div>
+        </div>
+
+        <!-- Landing -->
+        <div class="bg-[#1a1a2e] border border-[#2a2a4a] rounded-2xl p-6">
+          <h3 class="font-semibold text-[#e94560] mb-4 flex items-center gap-2">
+            <span>🌐</span> Landing Page
+          </h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="tech-badge">📄 HTML5</span>
+            <span class="tech-badge">💅 CSS3</span>
+            <span class="tech-badge">🎨 Tailwind CSS</span>
+            <span class="tech-badge">🔤 Google Fonts</span>
+          </div>
+        </div>
+
+        <!-- Storage -->
+        <div class="bg-[#1a1a2e] border border-[#2a2a4a] rounded-2xl p-6">
+          <h3 class="font-semibold text-[#e94560] mb-4 flex items-center gap-2">
+            <span>💾</span> Armazenamento
+          </h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="tech-badge">🐍 Lista Python</span>
+            <span class="tech-badge">🔒 Em memória</span>
+            <span class="tech-badge">❌ Sem banco de dados</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ENDPOINTS ─────────────────────────────────────────────────────────── -->
+  <section class="py-20 border-t border-[#1a1a2e]" id="endpoints">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="font-orbitron text-3xl font-bold text-center mb-3">Endpoints da API</h2>
+      <p class="text-[#a0a0b0] text-center mb-12">
+        Swagger UI disponível em <span class="text-[#60b0ff] font-mono">http://localhost:5000/apidocs</span>
+      </p>
+
+      <div class="space-y-4 max-w-3xl mx-auto">
+        <!-- GET /games -->
+        <div class="bg-[#1a1a2e] border border-[#2a2a4a] rounded-xl p-5">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="bg-[#0f3460] text-blue-300 font-mono font-bold px-3 py-1 rounded text-sm">GET</span>
+            <code class="text-white font-mono">/games</code>
+            <span class="ml-auto text-xs text-[#606080]">Lista todos os games</span>
+          </div>
+          <pre class="text-xs text-[#a0f0a0] bg-[#0a0a0a] rounded p-3 overflow-x-auto">{ "total": 5, "games": [ { "id": 1, "titulo": "The Witcher 3", ... } ] }</pre>
+        </div>
+
+        <!-- GET /games/:id -->
+        <div class="bg-[#1a1a2e] border border-[#2a2a4a] rounded-xl p-5">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="bg-[#0f3460] text-blue-300 font-mono font-bold px-3 py-1 rounded text-sm">GET</span>
+            <code class="text-white font-mono">/games/&lt;id&gt;</code>
+            <span class="ml-auto text-xs text-[#606080]">Retorna um game pelo ID</span>
+          </div>
+          <pre class="text-xs text-[#a0f0a0] bg-[#0a0a0a] rounded p-3 overflow-x-auto">{ "id": 1, "titulo": "The Witcher 3", "genero": "RPG", "plataforma": "PC", "nota": 9.8 }</pre>
+        </div>
+
+        <!-- POST /games -->
+        <div class="bg-[#1a1a2e] border border-[#2a2a4a] rounded-xl p-5">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="bg-[#3a0f20] text-[#e94560] font-mono font-bold px-3 py-1 rounded text-sm">POST</span>
+            <code class="text-white font-mono">/games</code>
+            <span class="ml-auto text-xs text-[#606080]">Cadastra novo game (validação Pydantic)</span>
+          </div>
+          <p class="text-xs text-[#606080] mb-2">Body (JSON):</p>
+          <pre class="text-xs text-[#a0f0a0] bg-[#0a0a0a] rounded p-3 overflow-x-auto">{ "titulo": "Hades", "genero": "Roguelike", "plataforma": "PC", "nota": 9.3 }</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INSTALAÇÃO ────────────────────────────────────────────────────────── -->
+  <section class="py-20 bg-[#0a0a0a] border-t border-[#1a1a2e]" id="instalacao">
+    <div class="max-w-4xl mx-auto px-6">
+      <h2 class="font-orbitron text-3xl font-bold text-center mb-3">Como Executar</h2>
+      <p class="text-[#a0a0b0] text-center mb-12">Siga os passos abaixo para rodar o projeto localmente</p>
+
+      <div class="space-y-8">
+        <!-- Passo 1 -->
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[#e94560] flex items-center justify-center font-bold text-sm">1</div>
+          <div class="flex-1">
+            <h3 class="font-semibold mb-3">Clonar / Baixar o projeto</h3>
+            <div class="terminal">
+              <div class="terminal-bar">
+                <div class="dot bg-[#e94560]"></div>
+                <div class="dot bg-yellow-500"></div>
+                <div class="dot bg-green-500"></div>
+                <span class="text-xs text-[#606080] ml-2">terminal</span>
+              </div>
+              <pre><span class="comment"># Acesse a pasta do projeto</span>
+cd ldw/</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Passo 2 -->
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[#e94560] flex items-center justify-center font-bold text-sm">2</div>
+          <div class="flex-1">
+            <h3 class="font-semibold mb-3">Instalar dependências</h3>
+            <div class="terminal">
+              <div class="terminal-bar">
+                <div class="dot bg-[#e94560]"></div>
+                <div class="dot bg-yellow-500"></div>
+                <div class="dot bg-green-500"></div>
+                <span class="text-xs text-[#606080] ml-2">terminal</span>
+              </div>
+              <pre><span class="cmd">pip install -r requirements.txt</span></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Passo 3 -->
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[#e94560] flex items-center justify-center font-bold text-sm">3</div>
+          <div class="flex-1">
+            <h3 class="font-semibold mb-3">Iniciar o Backend</h3>
+            <div class="terminal">
+              <div class="terminal-bar">
+                <div class="dot bg-[#e94560]"></div>
+                <div class="dot bg-yellow-500"></div>
+                <div class="dot bg-green-500"></div>
+                <span class="text-xs text-[#606080] ml-2">terminal 1 — Backend</span>
+              </div>
+              <pre><span class="comment"># No terminal 1</span>
+cd backend/
+<span class="cmd">python app.py</span>
+
+<span class="comment"># Saída esperada:</span>
+<span class="url"> * Running on http://localhost:5000
+ * Swagger UI: http://localhost:5000/apidocs</span></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Passo 4 -->
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[#e94560] flex items-center justify-center font-bold text-sm">4</div>
+          <div class="flex-1">
+            <h3 class="font-semibold mb-3">Iniciar o Frontend</h3>
+            <div class="terminal">
+              <div class="terminal-bar">
+                <div class="dot bg-[#e94560]"></div>
+                <div class="dot bg-yellow-500"></div>
+                <div class="dot bg-green-500"></div>
+                <span class="text-xs text-[#606080] ml-2">terminal 2 — Frontend</span>
+              </div>
+              <pre><span class="comment"># No terminal 2 (backend deve estar rodando)</span>
+cd frontend/
+<span class="cmd">python main.py</span>
+
+<span class="comment"># A janela do GameVault abrirá automaticamente</span></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Passo 5 -->
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-500 flex items-center justify-center font-bold text-sm">5</div>
+          <div class="flex-1">
+            <h3 class="font-semibold mb-3">Acessar Landing Page e Swagger</h3>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <div class="bg-[#1a1a2e] border border-[#2a2a4a] rounded-lg p-4">
+                <p class="text-xs text-[#606080] mb-1">Landing Page</p>
+                <p class="font-mono text-sm text-[#60b0ff]">Abrir landing-page/index.html</p>
+                <p class="text-xs text-[#606080] mt-1">Duplo clique no arquivo</p>
+              </div>
+              <div class="bg-[#1a1a2e] border border-[#2a2a4a] rounded-lg p-4">
+                <p class="text-xs text-[#606080] mb-1">Swagger UI</p>
+                <p class="font-mono text-sm text-[#60b0ff]">localhost:5000/apidocs</p>
+                <p class="text-xs text-[#606080] mt-1">Testar endpoints no browser</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ESTRUTURA ─────────────────────────────────────────────────────────── -->
+  <section class="py-20 border-t border-[#1a1a2e]">
+    <div class="max-w-4xl mx-auto px-6">
+      <h2 class="font-orbitron text-3xl font-bold text-center mb-12">Estrutura do Projeto</h2>
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="dot bg-[#e94560]"></div>
+          <div class="dot bg-yellow-500"></div>
+          <div class="dot bg-green-500"></div>
+          <span class="text-xs text-[#606080] ml-2">projeto/</span>
+        </div>
+        <pre style="color:#eaeaea">ldw/
+├── <span style="color:#60b0ff">backend/</span>
+│   ├── app.py                  <span class="comment"># Flask app + Flasgger + Blueprints</span>
+│   ├── <span style="color:#60b0ff">blueprints/</span>
+│   │   ├── __init__.py
+│   │   └── games.py            <span class="comment"># GET /games, GET /games/&lt;id&gt;, POST /games</span>
+│   └── <span style="color:#60b0ff">schemas/</span>
+│       ├── __init__.py
+│       └── game_schema.py      <span class="comment"># Validação Pydantic</span>
+│
+├── <span style="color:#60b0ff">frontend/</span>
+│   └── main.py                 <span class="comment"># Interface Flet dark/gamer</span>
+│
+├── <span style="color:#60b0ff">landing-page/</span>
+│   └── index.html              <span class="comment"># HTML + Tailwind CSS</span>
+│
+├── requirements.txt            <span class="comment"># Dependências Python</span>
+└── README.md                   <span class="comment"># Documentação completa</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────────────────────── -->
+  <footer class="border-t border-[#1a1a2e] py-10 bg-[#0a0a0a]">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <span class="font-orbitron font-bold text-[#e94560]">GAMEVAULT</span>
+        <p class="text-xs text-[#606080] mt-1">Projeto acadêmico full stack — Flask + Flet + Tailwind CSS</p>
+      </div>
+      <div class="flex gap-6 text-xs text-[#606080]">
+        <span>Backend: Flask + Pydantic</span>
+        <span>·</span>
+        <span>Frontend: Flet</span>
+        <span>·</span>
+        <span>Landing: Tailwind CSS</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
