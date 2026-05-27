@@ -1,11 +1,18 @@
-from flask import Flask
+import os
+from flask import Flask, send_file
 from flask_cors import CORS
 from flasgger import Swagger
 from blueprints.games import games_bp
 
+LANDING_PAGE = os.path.join(os.path.dirname(__file__), "..", "landing-page", "index.html")
+
 def criar_app() -> Flask:
     app = Flask(__name__)
     CORS(app)
+
+    @app.get("/")
+    def landing():
+        return send_file(os.path.abspath(LANDING_PAGE))
 
     swagger_config = {
         "headers": [],
