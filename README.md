@@ -14,7 +14,7 @@ Projeto acadêmico full stack com backend Flask, interface desktop Flet e landin
 ## Estrutura do Projeto
 
 ```
-ldw/
+ldw_atv2/
 ├── backend/
 │   ├── app.py
 │   ├── blueprints/
